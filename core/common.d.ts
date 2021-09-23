@@ -249,5 +249,21 @@ export interface AccessToken extends Insertable, Patchable {
     owner: string;
     rules: string[];
 }
+export declare type PaymentStatus = "pending" | "cancelled" | "paid";
+export declare type BusinessPIStatus = PaymentStatus | "failure";
+export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
+    responseURL: string;
+    projectId: string;
+    status: BusinessPIStatus;
+    emissionDate: number;
+    paymentURL: string;
+    reason?: string;
+    confirmedAt?: number;
+    paidAt?: number;
+    cancelledAt?: number;
+    userId?: string;
+    walletId?: string;
+    failureText?: string;
+}
 export * from './investor';
 export * from './roles';
