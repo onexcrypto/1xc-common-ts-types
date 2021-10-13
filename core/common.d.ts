@@ -249,8 +249,8 @@ export interface AccessToken extends Insertable, Patchable {
     owner: string;
     rules: string[];
 }
-export declare type PaymentStatus = "pending" | "cancelled" | "paid";
-export declare type BusinessPIStatus = PaymentStatus | "failure";
+export declare type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
+export declare type BusinessPIStatus = PaymentStatus | "failed" | "expired";
 export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
     responseURL: string;
     projectId: string;
@@ -265,5 +265,33 @@ export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
     walletId?: string;
     failureText?: string;
 }
+export interface Project extends Indexable, Insertable, Patchable {
+    name: string;
+    commissionRate: number;
+    logo: string;
+    walletId: string;
+    userId: string;
+}
+interface AppType<Name> {
+    type: Name;
+}
+declare type AppMobileVariant = 'android' | 'ios';
+declare type AppWebVariant = 'site' | 'ip';
+interface AppVariant<Variant> {
+    variant: Variant;
+}
+export interface AppWebArea {
+    url: string;
+}
+export interface AppMobileArea {
+    url: string;
+    packageID?: string;
+}
+export interface AppArea {
+    projectId: string;
+}
+export declare type AppWeb = AppType<'web'> & AppVariant<AppWebVariant> & AppWebArea;
+export declare type AppMobile = AppType<'mobile'> & AppVariant<AppMobileVariant> & AppMobileArea;
+export declare type Application = Insertable & Indexable & Patchable & (AppWeb | AppMobile) & AppArea;
 export * from './investor';
 export * from './roles';
