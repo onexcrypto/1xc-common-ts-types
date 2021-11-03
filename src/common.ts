@@ -308,11 +308,16 @@ export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
     failureText?: string;
 }
 
-export interface Project extends Indexable, Insertable, Patchable {
+export interface IProjectForm {
     name: string;
+    id: string;
+    description?: string;
     commissionRate: number;
     logo: string;
     walletId: string;
+}
+
+export interface Project extends IProjectForm, Indexable, Insertable, Patchable {
     userId: string;
 }
 
