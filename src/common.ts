@@ -284,12 +284,16 @@ export interface ExchangeCalculation{
     rateApplied: number;
 }
 
-export interface AccessToken extends Insertable, Patchable{
-    hash: string; /// sha-256 of the generated key
-    owner: string; /// the user id
-    rules: string[];
-}
 
+export interface AccessToken extends Insertable, Patchable{
+    read: string; /// sha-256 of the read part of the key key. read mode enabled for read operations, when authenticated with it.
+    write: string; ///sha256 signature of the write part of the key. write mode enabled for write operations, when authenticated with it
+    hash: string; ///sha256 signature of the concatenation of read key and write key. User gets read and write mode enabled by authenticating with it.
+    owner: string; /// the user id
+    label?: string;
+    rights: string[];
+    projectId?: string; 
+}
 export type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
 
 export type BusinessPIStatus = PaymentStatus | "failed" | "expired";
