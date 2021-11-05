@@ -245,9 +245,13 @@ export interface ExchangeCalculation {
     rateApplied: number;
 }
 export interface AccessToken extends Insertable, Patchable {
+    read: string;
+    write: string;
     hash: string;
     owner: string;
-    rules: string[];
+    label?: string;
+    rights: string[];
+    projectId?: string;
 }
 export declare type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
 export declare type BusinessPIStatus = PaymentStatus | "failed" | "expired";
