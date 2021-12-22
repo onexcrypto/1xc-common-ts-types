@@ -310,6 +310,8 @@ export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
     userId?: string;
     walletId?: string;
     failureText?: string;
+    transactionId?: string;
+    payload?: KeyValue;
 }
 
 export interface IProjectForm {
