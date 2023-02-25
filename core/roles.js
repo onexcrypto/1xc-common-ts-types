@@ -5,6 +5,8 @@ exports.ScopedRoleList = [
     "user:profile:read",
     "user:profile:activate",
     "user:profile:block",
+    "user:rules:assign",
+    "user:subaccounts:create",
     "user:profile:.*",
     "user:business:read",
     "user:business:allow",

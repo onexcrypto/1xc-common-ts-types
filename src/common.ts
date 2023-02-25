@@ -1,20 +1,21 @@
 import { NetworkRule } from "./investor";
 import { PriceStep } from "./pricing";
 import { ScopedRole } from "./roles";
+import { UserRule } from "./rules";
 
-interface Indexable{
+interface Indexable {
     id: string;
 }
 
-interface Patchable{
+interface Patchable {
     updatedAt: number;
 }
 
-interface Insertable{
+interface Insertable {
     insertedAt: number;
 }
 
-export interface Money{
+export interface Money {
     amount: number;
     currency: string;
 }
@@ -28,8 +29,8 @@ export interface TransfertProperties {
     }
 }
 
-export interface SystemProperties{
-    wallets:{
+export interface SystemProperties {
+    wallets: {
         businessAccountFee: Money;
         allowedCurrencies: string[];
     },
@@ -37,35 +38,35 @@ export interface SystemProperties{
     transfert?: TransfertProperties;
 }
 
-export interface OnlineApiAccount{
+export interface OnlineApiAccount {
     publicKey: string;
     privateKey: string;
 }
 
-export interface CoinbaseAccount extends OnlineApiAccount{}
+export interface CoinbaseAccount extends OnlineApiAccount { }
 
-export interface FedaPayAccount extends OnlineApiAccount{}
+export interface FedaPayAccount extends OnlineApiAccount { }
 
-export interface PerfectMoneyAccount{
+export interface PerfectMoneyAccount {
     accountId: string;
     passphrase: string;
     alternatePassphrase: string;
 }
 
 export type MethodAccountType = "perfectmoney" | "coinbase" | "fedapay";
-export interface MethodAccount extends Indexable{
+export interface MethodAccount extends Indexable {
     type: MethodAccountType;
     details: OnlineApiAccount | FedaPayAccount | CoinbaseAccount | PerfectMoneyAccount;
 }
 
-export interface KeyValue{
+export interface KeyValue {
     [key: string]: any;
 }
 
 export type Gender = "male" | "female";
 
 export type UserStatus = "active" | "disabled";
-export interface User extends Indexable, Insertable, Patchable{
+export interface User extends Indexable, Insertable, Patchable {
     firstName: string;
     lastName: string;
     gender: Gender;
@@ -73,37 +74,60 @@ export interface User extends Indexable, Insertable, Patchable{
     passwordHash?: string;
 }
 
-export interface AccountVerificationCode extends Indexable{
+export interface AccountVerificationCode extends Indexable {
     userId: string;
     code: string;
 }
 
 type AccountType = "std" | "mp" | "wm" | "pos" | "sm"; /// std: customer standard, mp: Money Point, pos: POS merchant
 
-export interface Customer extends User{
+/**
+ * Represents media (images/ audio / video) content stored on the bucket;
+ */
+type Media = {
+    url: string;
+    name: string;
+    type: string;
+    size?: number;
+}
+
+export interface Customer extends User {
     status: UserStatus;
     country: string;
     verified: boolean;
     isMerchant: boolean;
     type: AccountType;
+    rules?: UserRule[];
+    /**
+     * This field is available only for POS Users who can emit cards.
+     * It is printed on the generated card.
+     */
+    logo?: Media;
+    parentId?: string;
+    documents?: {
+        ifu: Media;
+        id: Media;
+        rccm: Media;
+    }
 }
 
 export type WalletType = "business" | "standard";
-export interface Wallet extends Indexable, Insertable, Patchable{
+export interface Wallet extends Indexable, Insertable, Patchable {
     userId: string;
     type: WalletType;
     balance: Money;
     isMain: boolean;
+    isAnonymous?: boolean;
 }
 
 export type WalletHistoryType = "commission" | "normal";
-export interface WalletHistory extends Indexable, Insertable, Money{
+export interface WalletHistory extends Indexable, Insertable, Money {
     type: WalletHistoryType;
     walletId: string,
     memo: string;
 }
 
-export interface WalletRegistrationEntry extends Indexable, Insertable{
+export interface WalletRegistrationEntry extends Indexable, Insertable {
     userId: string;
     walletId: string;
     sourceWalletId: string;
@@ -135,33 +159,33 @@ export interface WalletTransfer extends Indexable, Insertable {
     reason?: string;
 }
 
-export interface Admin extends Indexable, Insertable{
+export interface Admin extends Indexable, Insertable {
     firstName: string;
     lastName: string;
     gender: Gender;
     alias: string;
     passwordHash?: string;
-    status: "active"|"disabled";
+    status: "active" | "disabled";
     genesis: boolean;
 }
 
-export interface AdminWithRoles{
+export interface AdminWithRoles {
     profile: Admin;
     roles: ScopedRole[];
 }
 
 export type DocType = "cni" | "ifu" | "rc";
 
-export interface Document{
+export interface Document {
     docType: DocType;
     fileType: string;
     name: string;
     verified: boolean;
 }
 
-export type BusinessProfileStatus  = "pending" | "verified" | "rejected";
+export type BusinessProfileStatus = "pending" | "verified" | "rejected";
 
-export interface BusinessProfile extends Indexable, Insertable, Patchable{
+export interface BusinessProfile extends Indexable, Insertable, Patchable {
     name: string;
     userId: string;
     country: string;
@@ -171,7 +195,7 @@ export interface BusinessProfile extends Indexable, Insertable, Patchable{
     documents: Document[];
     verificationDate?: number;
     status: BusinessProfileStatus;
-    corrections?: IBusinessCorrection[]; 
+    corrections?: IBusinessCorrection[];
 }
 
 export interface IBusinessCorrection {
@@ -182,7 +206,7 @@ export interface IBusinessCorrection {
 
 export type MethodCategory = "banking" | "card" | "mobile" | "transfer" | "cryptocurrency";
 
-export interface AmountLimitation{
+export interface AmountLimitation {
     minAmount: number;
     maxAmount: number;
     staticFee: number;
@@ -192,12 +216,12 @@ export interface AmountLimitation{
     pattern: string;
 }
 
-export interface BankingDetails extends AmountLimitation{
+export interface BankingDetails extends AmountLimitation {
     currency: string;
     account: string;
 }
 
-export interface MobileDetails extends AmountLimitation{
+export interface MobileDetails extends AmountLimitation {
     address: string;
     currency: string;
     country: string;
@@ -207,7 +231,7 @@ export interface MobileDetails extends AmountLimitation{
     }
 }
 
-export interface TransferDetails extends AmountLimitation{
+export interface TransferDetails extends AmountLimitation {
     currency: string;
 }
 
@@ -216,11 +240,11 @@ export interface CardDetails extends AmountLimitation {
     country: string;
 }
 
-export interface CryptoCurrencyDetails extends AmountLimitation{}
+export interface CryptoCurrencyDetails extends AmountLimitation { }
 
 export type MethodDetails = BankingDetails | CardDetails | MobileDetails | TransferDetails | CryptoCurrencyDetails;
 
-export interface Method extends Indexable, Insertable, Patchable{
+export interface Method extends Indexable, Insertable, Patchable {
     category: MethodCategory;
     type: string;
     label: string;
@@ -233,13 +257,13 @@ export interface Method extends Indexable, Insertable, Patchable{
     details: MethodDetails;
 }
 
-export type TicketStatus =  "pending" | "confirmed" | "cancelled" | "paid";
+export type TicketStatus = "pending" | "confirmed" | "cancelled" | "paid";
 export interface CardRechargeData {
     holder: string;
     identifier: string;
 }
 
-export interface Ticket extends Indexable{
+export interface Ticket extends Indexable {
     id: string;
     userId: string;
     source: Method;
@@ -257,7 +281,7 @@ export interface Ticket extends Indexable{
     cancelledAt?: number;
 }
 
-export interface TicketPayment extends Indexable, Money{
+export interface TicketPayment extends Indexable, Money {
     ticketId: string;
     type: string;
     address: string;
@@ -267,7 +291,7 @@ export interface TicketPayment extends Indexable, Money{
 export type TxType = "in" | "out";
 export type TxStatus = "pending" | "done";
 
-export interface Transaction extends Indexable, Insertable{
+export interface Transaction extends Indexable, Insertable {
     ticketId: string;
     variant: TxType;
     type: string;
@@ -278,10 +302,10 @@ export interface Transaction extends Indexable, Insertable{
     reference: string;
     status: TxStatus;
     insertedAt: number;
-    validatedAt? : number;
+    validatedAt?: number;
 }
 
-export interface ExchangeCalculation{
+export interface ExchangeCalculation {
     source: string;
     dest: string;
     rate: number;
@@ -291,14 +315,14 @@ export interface ExchangeCalculation{
 }
 
 
-export interface AccessToken extends Insertable, Patchable{
+export interface AccessToken extends Insertable, Patchable {
     read: string; /// sha-256 of the read part of the key key. read mode enabled for read operations, when authenticated with it.
     write: string; ///sha256 signature of the write part of the key. write mode enabled for write operations, when authenticated with it
     hash: string; ///sha256 signature of the concatenation of read key and write key. User gets read and write mode enabled by authenticating with it.
     owner: string; /// the user id
     label?: string;
     rights: string[];
-    projectId?: string; 
+    projectId?: string;
 }
 export type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
 
