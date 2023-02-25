@@ -20,3 +20,4 @@ __exportStar(require("./investor"), exports);
 __exportStar(require("./roles"), exports);
 __exportStar(require("./pricing"), exports);
 __exportStar(require("./rules"), exports);
+__exportStar(require("./card"), exports);

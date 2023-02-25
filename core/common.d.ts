@@ -2,13 +2,13 @@ import { NetworkRule } from "./investor";
 import { PriceStep } from "./pricing";
 import { ScopedRole } from "./roles";
 import { UserRule } from "./rules";
-interface Indexable {
+export interface Indexable {
     id: string;
 }
-interface Patchable {
+export interface Patchable {
     updatedAt: number;
 }
-interface Insertable {
+export interface Insertable {
     insertedAt: number;
 }
 export interface Money {
