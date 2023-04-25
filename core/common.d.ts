@@ -44,7 +44,7 @@ export interface PerfectMoneyAccount {
     passphrase: string;
     alternatePassphrase: string;
 }
-export type MethodAccountType = "perfectmoney" | "coinbase" | "fedapay";
+export declare type MethodAccountType = "perfectmoney" | "coinbase" | "fedapay";
 export interface MethodAccount extends Indexable {
     type: MethodAccountType;
     details: OnlineApiAccount | FedaPayAccount | CoinbaseAccount | PerfectMoneyAccount;
@@ -52,8 +52,8 @@ export interface MethodAccount extends Indexable {
 export interface KeyValue {
     [key: string]: any;
 }
-export type Gender = "male" | "female";
-export type UserStatus = "active" | "disabled";
+export declare type Gender = "male" | "female";
+export declare type UserStatus = "active" | "disabled";
 export interface User extends Indexable, Insertable, Patchable {
     firstName: string;
     lastName: string;
@@ -65,11 +65,11 @@ export interface AccountVerificationCode extends Indexable {
     userId: string;
     code: string;
 }
-type AccountType = "std" | "mp" | "wm" | "pos" | "sm";
+declare type AccountType = "std" | "mp" | "wm" | "pos" | "sm";
 /**
  * Represents media (images/ audio / video) content stored on the bucket;
  */
-type Media = {
+declare type Media = {
     url: string;
     name: string;
     type: string;
@@ -94,7 +94,7 @@ export interface Customer extends User {
         rccm: Media;
     };
 }
-export type WalletType = "business" | "standard";
+export declare type WalletType = "business" | "standard";
 export interface Wallet extends Indexable, Insertable, Patchable {
     userId: string;
     type: WalletType;
@@ -102,7 +102,7 @@ export interface Wallet extends Indexable, Insertable, Patchable {
     isMain: boolean;
     isAnonymous?: boolean;
 }
-export type WalletHistoryType = "commission" | "normal";
+export declare type WalletHistoryType = "commission" | "normal";
 export interface WalletHistory extends Indexable, Insertable, Money {
     type: WalletHistoryType;
     walletId: string;
@@ -151,14 +151,14 @@ export interface AdminWithRoles {
     profile: Admin;
     roles: ScopedRole[];
 }
-export type DocType = "cni" | "ifu" | "rc";
+export declare type DocType = "cni" | "ifu" | "rc";
 export interface Document {
     docType: DocType;
     fileType: string;
     name: string;
     verified: boolean;
 }
-export type BusinessProfileStatus = "pending" | "verified" | "rejected";
+export declare type BusinessProfileStatus = "pending" | "verified" | "rejected";
 export interface BusinessProfile extends Indexable, Insertable, Patchable {
     name: string;
     userId: string;
@@ -176,7 +176,7 @@ export interface IBusinessCorrection {
     content: String;
     submittedAt: number;
 }
-export type MethodCategory = "banking" | "card" | "mobile" | "transfer" | "cryptocurrency";
+export declare type MethodCategory = "banking" | "card" | "mobile" | "transfer" | "cryptocurrency";
 export interface AmountLimitation {
     minAmount: number;
     maxAmount: number;
@@ -208,7 +208,7 @@ export interface CardDetails extends AmountLimitation {
 }
 export interface CryptoCurrencyDetails extends AmountLimitation {
 }
-export type MethodDetails = BankingDetails | CardDetails | MobileDetails | TransferDetails | CryptoCurrencyDetails;
+export declare type MethodDetails = BankingDetails | CardDetails | MobileDetails | TransferDetails | CryptoCurrencyDetails;
 export interface Method extends Indexable, Insertable, Patchable {
     category: MethodCategory;
     type: string;
@@ -221,7 +221,7 @@ export interface Method extends Indexable, Insertable, Patchable {
     addedAt?: number;
     details: MethodDetails;
 }
-export type TicketStatus = "pending" | "confirmed" | "cancelled" | "paid";
+export declare type TicketStatus = "pending" | "confirmed" | "cancelled" | "paid";
 export interface CardRechargeData {
     holder: string;
     identifier: string;
@@ -249,8 +249,8 @@ export interface TicketPayment extends Indexable, Money {
     address: string;
     paymentUrl: string;
 }
-export type TxType = "in" | "out";
-export type TxStatus = "pending" | "done";
+export declare type TxType = "in" | "out";
+export declare type TxStatus = "pending" | "done";
 export interface Transaction extends Indexable, Insertable {
     ticketId: string;
     variant: TxType;
@@ -281,8 +281,8 @@ export interface AccessToken extends Insertable, Patchable {
     rights: string[];
     projectId?: string;
 }
-export type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
-export type BusinessPIStatus = PaymentStatus | "failed" | "expired";
+export declare type PaymentStatus = "pending" | "confirmed" | "cancelled" | "paid";
+export declare type BusinessPIStatus = PaymentStatus | "failed" | "expired";
 export interface BusinessPaymentIntent extends Money, Indexable, Insertable {
     responseURL: string;
     projectId: string;
@@ -313,8 +313,8 @@ export interface Project extends IProjectForm, Indexable, Insertable, Patchable 
 interface AppType<Name> {
     type: Name;
 }
-type AppMobileVariant = 'android' | 'ios';
-type AppWebVariant = 'site' | 'ip';
+declare type AppMobileVariant = 'android' | 'ios';
+declare type AppWebVariant = 'site' | 'ip';
 interface AppVariant<Variant> {
     variant: Variant;
 }
@@ -328,8 +328,8 @@ export interface AppMobileArea {
 export interface AppArea {
     projectId: string;
 }
-export type AppWeb = AppType<'web'> & AppVariant<AppWebVariant> & AppWebArea;
-export type AppMobile = AppType<'mobile'> & AppVariant<AppMobileVariant> & AppMobileArea;
-export type Application = Insertable & Indexable & Patchable & (AppWeb | AppMobile) & AppArea;
+export declare type AppWeb = AppType<'web'> & AppVariant<AppWebVariant> & AppWebArea;
+export declare type AppMobile = AppType<'mobile'> & AppVariant<AppMobileVariant> & AppMobileArea;
+export declare type Application = Insertable & Indexable & Patchable & (AppWeb | AppMobile) & AppArea;
 export * from './investor';
 export * from './roles';

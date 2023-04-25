@@ -11,7 +11,7 @@ class TransferConstraints {
         let rule = utils_1.RuleUtils.findLatestRule(this.rules, (r, i) => {
             return r.name === "wallet.transfer";
         });
-        return (0, utils_1.RuleFn)(rule);
+        return utils_1.RuleFn(rule);
     }
 }
 exports.TransferConstraints = TransferConstraints;

@@ -33,27 +33,27 @@ class CardConstraints {
             return r.name === "card.scan" && Boolean(r.metadata.cards.find((c) => c === code));
         });
         if (rule) {
-            return (0, utils_1.RuleFn)(rule);
+            return utils_1.RuleFn(rule);
         }
-        return (0, utils_1.RuleFn)(undefined);
+        return utils_1.RuleFn(undefined);
     }
     scanCardWithUser(uid) {
         let rule = utils_1.RuleUtils.findLatestRule(this.rules, (r, i) => {
             return r.name === "card.scan" && Boolean(r.metadata.owners.find((c) => c === uid));
         });
         if (rule) {
-            return (0, utils_1.RuleFn)(rule);
+            return utils_1.RuleFn(rule);
         }
-        return (0, utils_1.RuleFn)(undefined);
+        return utils_1.RuleFn(undefined);
     }
     scanCardWithWallet(wid) {
         let rule = utils_1.RuleUtils.findLatestRule(this.rules, (r, i) => {
             return r.name === "card.scan" && Boolean(r.metadata.wallets.find((c) => c === wid));
         });
         if (rule) {
-            return (0, utils_1.RuleFn)(rule);
+            return utils_1.RuleFn(rule);
         }
-        return (0, utils_1.RuleFn)(undefined);
+        return utils_1.RuleFn(undefined);
     }
 }
 exports.CardConstraints = CardConstraints;

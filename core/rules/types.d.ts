@@ -1,5 +1,5 @@
 import { PriceStep } from "../pricing";
-export type UserRuleStatus = "allow" | "disallow";
+export declare type UserRuleStatus = "allow" | "disallow";
 interface IAbstractRule {
     id?: string;
     name: string;
@@ -38,5 +38,5 @@ export interface IRuleTransfer extends IAbstractRule {
 export interface IRuleUser extends IAbstractRule {
     name: "subaccounts";
 }
-export type UserRule = IRuleUser | IRuleCardScan | IRuleCardEmit | IRuleExchange | IRuleTransfer;
+export declare type UserRule = IRuleUser | IRuleCardScan | IRuleCardEmit | IRuleExchange | IRuleTransfer;
 export {};

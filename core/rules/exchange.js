@@ -11,7 +11,7 @@ class ExchangeConstraints {
         let rule = utils_1.RuleUtils.findLatestRule(this.rules, (r, i) => {
             return r.name === "exchanges";
         });
-        return (0, utils_1.RuleFn)(rule);
+        return utils_1.RuleFn(rule);
     }
 }
 exports.ExchangeConstraints = ExchangeConstraints;
